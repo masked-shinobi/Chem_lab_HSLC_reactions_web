@@ -18,7 +18,7 @@ const ReactionInfo = ({ reaction }) => {
     const typeStyle = TYPE_COLORS[reaction?.type] || DEFAULT_TYPE;
 
     return (
-        <div className="w-80 h-full flex flex-col py-6 px-4 overflow-y-auto" style={{ minWidth: 300 }}>
+        <div className="w-80 h-full flex flex-col py-10 px-6 overflow-y-auto" style={{ minWidth: 320 }}>
             <AnimatePresence mode="wait">
                 {reaction ? (
                     <motion.div
@@ -27,11 +27,11 @@ const ReactionInfo = ({ reaction }) => {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -16 }}
                         transition={{ duration: 0.3, ease: 'easeOut' }}
-                        className="flex flex-col gap-4"
+                        className="flex flex-col gap-8"
                     >
                         {/* Header */}
-                        <div className="glass p-4">
-                            <div className="flex items-start gap-3 mb-3">
+                        <div className="glass p-6">
+                            <div className="flex items-start gap-4 mb-4">
                                 <div className="p-2 rounded-xl" style={{ background: typeStyle.bg }}>
                                     <FlaskConical className="w-4 h-4" style={{ color: typeStyle.text }} />
                                 </div>
@@ -47,17 +47,17 @@ const ReactionInfo = ({ reaction }) => {
                             </div>
 
                             {/* Reaction equation */}
-                            <div className="p-3 rounded-xl" style={{ background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                                <p className="text-[9px] font-bold uppercase tracking-widest text-slate-500 mb-1.5">Equation</p>
-                                <p className="text-sm font-medium break-words leading-relaxed" style={{ fontFamily: 'JetBrains Mono, monospace', color: typeStyle.text }}>
+                            <div className="p-4 rounded-2xl" style={{ background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.06)' }}>
+                                <p className="text-[10px] font-black uppercase tracking-[0.15em] text-slate-500 mb-2.5">EQUATION</p>
+                                <p className="text-base font-bold break-words leading-relaxed" style={{ fontFamily: 'JetBrains Mono, monospace', color: typeStyle.text }}>
                                     {reaction.equation}
                                 </p>
                             </div>
                         </div>
 
                         {/* Reactants → Products */}
-                        <div className="glass p-4">
-                            <p className="text-[9px] font-bold uppercase tracking-widest text-slate-500 mb-3">Transformation</p>
+                        <div className="glass p-6">
+                            <p className="text-[10px] font-black uppercase tracking-[0.15em] text-slate-500 mb-4">TRANSFORMATION</p>
                             <div className="flex items-center gap-2 flex-wrap">
                                 <div className="flex flex-wrap gap-1.5">
                                     {reaction.reactants.map(r => (
@@ -78,8 +78,8 @@ const ReactionInfo = ({ reaction }) => {
                         </div>
 
                         {/* Observation */}
-                        <div className="glass p-4">
-                            <p className="text-[9px] font-bold uppercase tracking-widest text-slate-500 mb-2">Observation</p>
+                        <div className="glass p-6">
+                            <p className="text-[10px] font-black uppercase tracking-[0.15em] text-slate-500 mb-3">OBSERVATION</p>
                             <div className="flex items-start gap-2">
                                 <div
                                     className="mt-1 w-3 h-3 rounded-full shrink-0 ring-2 ring-offset-1 ring-offset-transparent"
@@ -92,9 +92,9 @@ const ReactionInfo = ({ reaction }) => {
                         </div>
 
                         {/* Description */}
-                        <div className="glass p-4">
-                            <p className="text-[9px] font-bold uppercase tracking-widest text-slate-500 mb-2">About</p>
-                            <p className="text-xs text-slate-400 leading-relaxed">{reaction.description}</p>
+                        <div className="glass p-6">
+                            <p className="text-[10px] font-black uppercase tracking-[0.15em] text-slate-500 mb-3">ABOUT</p>
+                            <p className="text-xs text-slate-400 leading-loose">{reaction.description}</p>
                         </div>
 
                         {/* Success banner */}

@@ -87,7 +87,7 @@ const Vessel = ({ activeReactants, currentReaction, onReset, onRemove }) => {
                     }}
                     transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
                     className={`flask-body ${hasContent ? 'active' : ''}`}
-                    style={{ width: 200, height: 240 }}
+                    style={{ width: 170, height: 210 }}
                 >
                     {/* Liquid */}
                     <motion.div

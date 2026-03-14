@@ -1,9 +1,30 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { reactionDataset } from '../data/reactionDataset';
 
 export const useReactionEngine = () => {
     const [activeReactants, setActiveReactants] = useState([]);
     const [currentReaction, setCurrentReaction] = useState(null);
+
+    // Calculate which chemicals are "compatible" with current vessel contents
+    const compatibleChemicals = useMemo(() => {
+        if (activeReactants.length === 0) return null; // All are compatible if vessel is empty
+
+        const reactantSet = new Set(activeReactants);
+        const compatibleSet = new Set();
+
+        reactionDataset.forEach(reaction => {
+            // A reaction is a "candidate" if ALL reagents currently in the vessel are 
+            // part of that reaction's requirement.
+            const isVesselSubsetOfReaction = activeReactants.every(r => reaction.reactants.includes(r));
+
+            if (isVesselSubsetOfReaction) {
+                // If it's a candidate, all its reactants are "compatible"
+                reaction.reactants.forEach(r => compatibleSet.add(r));
+            }
+        });
+
+        return Array.from(compatibleSet);
+    }, [activeReactants]);
 
     const checkReaction = (reactants) => {
         if (reactants.length === 0) {
@@ -14,7 +35,6 @@ export const useReactionEngine = () => {
         const reactantSet = new Set(reactants);
 
         // Find all reactions whose reactants are a SUBSET of what's in the vessel
-        // This means even if you have extra chemicals, a valid reaction can still fire.
         const matches = reactionDataset.filter((reaction) => {
             return reaction.reactants.every((r) => reactantSet.has(r));
         });
@@ -24,7 +44,7 @@ export const useReactionEngine = () => {
             return;
         }
 
-        // Prefer the most specific match (most reactants used), then most recently added
+        // Prefer the most specific match (most reactants used)
         matches.sort((a, b) => b.reactants.length - a.reactants.length);
         setCurrentReaction(matches[0]);
     };
@@ -54,6 +74,7 @@ export const useReactionEngine = () => {
     return {
         activeReactants,
         currentReaction,
+        compatibleChemicals,
         addReactant,
         removeReactant,
         resetVessel
