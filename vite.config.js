@@ -7,5 +7,16 @@ export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
-  ], // Reload triggered
+  ],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom'],
+          'motion': ['framer-motion'],
+          'icons': ['lucide-react'],
+        }
+      }
+    }
+  }
 })
